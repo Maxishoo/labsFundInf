@@ -1,0 +1,33 @@
+0, ,<,nach
+
+nach,1,<,nach
+nach,0,<,nach
+nach, ,>,del0
+
+del0,0,<,sdvig
+del0,1,<,finish
+del0, ,0,finish
+
+sdvig, ,>,sdvig2
+sdvig,1,>,sdvig2
+sdvig,0,>,sdvig2
+
+sdvig2,1,>,chislo
+sdvig2,0,>,chislo
+
+chislo,1,<,putsdvig1
+chislo,0,<,putsdvig0
+chislo, ,<,steret
+
+steret,1, ,sdvigstert
+steret,0, ,sdvigstert
+
+sdvigstert, ,<,nach
+
+putsdvig1,0,1,sdvig
+putsdvig1,1,1,sdvig
+
+putsdvig0,0,0,sdvig
+putsdvig0,1,0,sdvig
+
+finish, ,#,finish

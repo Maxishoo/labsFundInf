@@ -1,0 +1,167 @@
+0, ,<,startsdvig1
+
+startsdvig1,1,<,startsdvig1
+startsdvig1,0,<,startsdvig1
+startsdvig1, ,>,put!nch
+
+put!nch,1,!,go1lambd
+put!nch,0,!,go0lambd
+put!nch, , ,nach #финишь первого числа
+
+go1lambd,!,>,go1lambd
+go1lambd,1,>,go1lambd
+go1lambd,0,>,go1lambd
+go1lambd, ,>,put1!nch
+go0lambd,!,>,go0lambd
+go0lambd,1,>,go0lambd
+go0lambd,0,>,go0lambd
+go0lambd, ,>,put0!nch
+
+put1!nch,1,>,put1!nch
+put1!nch,0,>,put1!nch
+put1!nch, ,1,goback1nch
+put0!nch,1,>,put0!nch
+put0!nch,0,>,put0!nch
+put0!nch, ,0,goback0nch
+
+goback1nch,1,<,goback1nch
+goback1nch,0,<,goback1nch
+goback1nch, ,<,goback1nch
+goback1nch,!,1,sdvignch1
+goback0nch,1,<,goback0nch
+goback0nch,0,<,goback0nch
+goback0nch, ,<,goback0nch
+goback0nch,!,0,sdvignch1
+
+sdvignch1,1,>,sdvignch2
+sdvignch1,0,>,sdvignch2
+sdvignch1, , ,nach #финишь первого числа
+sdvignch2,1,>,put!nch
+sdvignch2,0,>,put!nch
+sdvignch2, , ,nach #финишь первого числа
+#################################################удаление нулей у первого
+nach,1,<,nach
+nach,0,<,nach
+nach, ,>,del0
+
+del0,0,<,sdvig
+del0,1,<,startsdvigch1
+del0, ,0,1leftfinish
+1leftfinish,0,<,startsdvigch1
+
+startsdvigch1, ,<,startsdvigch
+sdvig, ,>,sdvig2
+sdvig,1,>,sdvig2
+sdvig,0,>,sdvig2
+
+sdvig2,1,>,chislo
+sdvig2,0,>,chislo
+
+chislo,1,<,putsdvig1
+chislo,0,<,putsdvig0
+chislo, ,<,steret
+
+steret,1, ,sdvigstert
+steret,0, ,sdvigstert
+
+sdvigstert, ,<,nach
+
+putsdvig1,0,1,sdvig
+putsdvig1,1,1,sdvig
+
+putsdvig0,0,0,sdvig
+putsdvig0,1,0,sdvig
+
+#################################################конец удаления нулей у первого
+startsdvigch,1,<,startsdvigch
+startsdvigch,0,<,startsdvigch
+startsdvigch, ,>,1posstartch
+
+1posstartch,1,>,put!ch #находимся в начале на первом символе
+1posstartch,0,>,put!ch
+
+put!ch,1,!,go1lambd21
+put!ch,0,!,go0lambd21
+put!ch, ,>,goend1 #финишь второго числа
+
+go1lambd21,!,>,go1lambd21
+go1lambd21,1,>,go1lambd21
+go1lambd21,0,>,go1lambd21
+go1lambd21, ,>,go1lambd22
+go0lambd21,!,>,go0lambd21
+go0lambd21,1,>,go0lambd21
+go0lambd21,0,>,go0lambd21
+go0lambd21, ,>,go0lambd22
+
+go1lambd22,!,>,go1lambd22
+go1lambd22,1,>,go1lambd22
+go1lambd22,0,>,go1lambd22
+go1lambd22, ,>,put1!ch
+go0lambd22,!,>,go0lambd22
+go0lambd22,1,>,go0lambd22
+go0lambd22,0,>,go0lambd22
+go0lambd22, ,>,put0!ch
+
+put1!ch,1,>,put1!ch
+put1!ch,0,>,put1!ch
+put1!ch, ,1,goback1ch
+put0!ch,1,>,put0!ch
+put0!ch,0,>,put0!ch
+put0!ch, ,0,goback0ch
+
+goback1ch,1,<,goback1ch
+goback1ch,0,<,goback1ch
+goback1ch, ,<,goback1ch
+goback1ch,!,1,sdvigch1
+goback0ch,1,<,goback0ch
+goback0ch,0,<,goback0ch
+goback0ch, ,<,goback0ch
+goback0ch,!,0,sdvigch1
+
+sdvigch1,1,>,sdvigch2
+sdvigch1,0,>,sdvigch2
+sdvigch1, ,>,goend1 #финишь второго числа
+sdvigch2,1,>,put!ch
+sdvigch2,0,>,put!ch
+sdvigch2, ,>,goend1
+
+goend1,1,>,goend1
+goend1,0,>,goend1
+goend1, , ,2nach
+############################удаление нулей у второго числа
+2nach,1,<,2nach
+2nach,0,<,2nach
+2nach, ,>,2del0
+
+2del0,0,<,2sdvig
+2del0,1,1,goend2
+2del0, ,0,21leftfinish
+
+21leftfinish,0,0,goend2
+
+2sdvig, ,>,2sdvig2
+2sdvig,1,>,2sdvig2
+2sdvig,0,>,2sdvig2
+
+2sdvig2,1,>,2chislo
+2sdvig2,0,>,2chislo
+
+2chislo,1,<,2putsdvig1
+2chislo,0,<,2putsdvig0
+2chislo, ,<,2steret
+
+2steret,1, ,2sdvigstert
+2steret,0, ,2sdvigstert
+
+2sdvigstert, ,<,2nach
+
+2putsdvig1,0,1,2sdvig
+2putsdvig1,1,1,2sdvig
+
+2putsdvig0,0,0,2sdvig
+2putsdvig0,1,0,2sdvig
+############################конец удаления нулей у второго числа
+goend2,1,>,goend2
+goend2,0,>,goend2
+goend2, , ,finish
+finish, ,#,finish
