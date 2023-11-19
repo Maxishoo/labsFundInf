@@ -1,0 +1,5 @@
+﻿  Laba7CI.c
+C:\Users\Max\Desktop\InfaVUZ\FundInfLabs\Laba7\Laba7CI\Laba7CI.c(23,37): warning C4554: "&": проверьте приоритет операторов на ошибки; для уточнения приоритета используйте скобки
+C:\Users\Max\Desktop\InfaVUZ\FundInfLabs\Laba7\Laba7CI\Laba7CI.c(33,37): warning C4554: "&": проверьте приоритет операторов на ошибки; для уточнения приоритета используйте скобки
+C:\Users\Max\Desktop\InfaVUZ\FundInfLabs\Laba7\Laba7CI\Laba7CI.c(35,10): warning C4047: =: "int *" отличается по уровням косвенного обращения от "const int"
+  Laba7CI.vcxproj -> C:\Users\Max\Desktop\InfaVUZ\FundInfLabs\Laba7\Laba7CI\x64\Debug\Laba7CI.exe
