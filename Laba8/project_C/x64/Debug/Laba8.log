@@ -1,0 +1,4 @@
+﻿  Laba8.c
+C:\Users\Max\Desktop\InfaVUZ\FundInfLabs\Laba8\Laba8.c(26,8): warning C4477: "scanf": в строке форматирования "%d" требуется аргумент типа "int *", но вариативный аргумент "1" имеет тип "const int *"
+C:\Users\Max\Desktop\InfaVUZ\FundInfLabs\Laba8\Laba8.c(32,21): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+  Laba8.vcxproj -> C:\Users\Max\Desktop\InfaVUZ\FundInfLabs\Laba8\x64\Debug\Laba8.exe
