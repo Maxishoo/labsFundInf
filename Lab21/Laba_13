@@ -1,0 +1,182 @@
+#!/bin/bash
+
+function _info
+{
+echo ""
+echo "Скрипт копирования файла позволяет удобно создавать копии указаного файла"
+echo "Для получение информации необходимо ввести параметр < ? >"
+echo ""
+echo "Порядок передачи аргументов и праметров: <абсолютный путь входного файла, который копируем> <число копий> <ключи>"
+echo "-s указывается перед входными данными. При его наличии будет совершён перевод в режим диалога и ключи, расположеные следом за -s будут не учтены"
+echo "Порядок ключей может не совпадать с их порядком в перечислении"
+echo "Основные ключи:"
+echo ""
+echo "	-s режим диалога. По умолчанию выключен"
+echo "	-d указание директории, где будут созданы копии. Требует после себя указания абсолютного пути до директории. По умолчанию является директорией исходного файла"
+echo "	-n указание буквы/цифры с которого пойдет нумерация окончания имени копий файла. По умолчанию <_копия_1> и тд. При указании буквы невозможно создать копию с именем большем чем <..._z>"
+echo "	-r после успешного выполнения операции копирования удалить исходный файл.По умолчанию выключено"
+echo ""
+}
+
+if [ -z "$1" ]
+then
+    echo "Не указан ни один из обязательных параметров."
+    echo "Укажите параметр < ? > для получения дополнительной информации"
+    exit
+fi
+
+if [ $1 = "?" ]
+then
+    _info
+    exit
+fi
+
+name_n="_копия_"
+flag_r=0
+new_d=""
+main_d="none"
+count_cp=1
+
+if [ "$1" = "-s" ]
+then
+	shift
+	echo -n "Введите путь к файлу: "
+	read main_d
+	if [ "$main_d" = '' ]
+	then 
+		echo "Ошибка параметра. Введите <?> для получения дополнительной информации"
+		exit
+	fi
+	echo -n "Введите необходимое колличество копий: "
+	read count_cp
+	if [ "$count_cp" = '' ]
+	then 
+		echo "Ошибка параметра. Введите <?> для получения дополнительной информации"
+		exit
+	fi
+	echo "Следущие параметры не являются обязательными. Для пропуска введите <n>. При вводе <n> будет использоваться значение по умолчанию" 
+	echo -n "Укажите директорию, где будут созданы копии: "
+	read new_d
+	if [ "$new_d" = '' ]
+	then 
+		echo "Ошибка параметра. Введите <?> для получения дополнительной информации"
+		exit
+	fi
+	if [ "$new_d" = 'n' ]
+	then 
+		new_d=$main_d
+	fi
+	echo -n "Укажите букву/цифру с которой пойдет нумерация окончания имени копий файла: "
+	read name_n
+	if [ "$name_n" = '' ]
+	then 
+		echo "Ошибка параметра. Введите <?> для получения дополнительной информации"
+		exit
+	fi
+	if [ "$name_n" = 'n' ]
+	then 
+		name_n="_копия_"
+	fi
+else
+	main_d=$1
+	new_d=$(echo "$(dirname "$main_d")/")
+	shift
+	count_cp=$1
+	shift
+fi
+
+while [ -n "$1" ]
+do
+    case "$1" in
+    	-d)shift
+    	new_d=$1
+    	shift
+    	;;
+    	-r) flag_r=1
+    	shift
+    	;;
+    	-n)	shift
+    	name_n=$1
+    	shift
+    	;;
+        *) echo "Неверный ключ - < $1 > или отсутствие необходимых аргументов для одного из ключа"
+           echo "Используйте параметр < ? > для получения дополнительной информации"
+           exit
+        ;;
+    esac
+done
+
+status_name=-1 # 0 - numbers, 1 - little letter, 2 - big letter
+#echo "status: $status_name"
+if [[ $name_n != "_копия_" ]]
+then
+	if [[ $name_n =~ ^[0-9]+$ ]]; 
+	then
+		status_name=0
+	elif [[ ${name_n:0:1} =~ [a-z] ]]; 
+	then
+		status_name=1
+	elif [[ ${name_n:0:1} =~ [A-Z] ]]
+	then 
+		status_name=2
+	else
+		echo "Неверный аргумент."
+		echo "Используйте параметр < ? > для получения дополнительной информации"
+   		exit
+	fi
+fi
+#echo "status: $status_name"
+#otladka
+#echo "d $main_d"
+#echo "n $name_n"
+#echo "k $count_cp"
+#echo "r $flag_r"
+#echo "nd $new_d"
+#echo "st_li $st_li"
+#read kk
+#if [ "$kk" = 'n' ]
+#then
+#exit
+#fi 
+#finish otladkd
+# конец
+for ((i = 0; i < $count_cp; i++))
+do
+    file_name=$(basename "$main_d")
+    
+    if [ $name_n = "_копия_" ]
+    then
+        new_name=$(echo $new_d$file_name$name_n$(($i+1)))
+    elif [ $status_name -eq 0 ]
+    then
+        new_name=$(echo $new_d$file_name"_"$(($i+$name_n)))
+    elif [ $status_name -eq 1 ]
+    then
+        ascii_val=$(printf "%d" "'$name_n")
+        st_li=$((ascii_val + i))
+        if [ $st_li -gt 122 ]
+        then
+            break
+        fi
+        nn_n=$(printf "\\$(printf %o $st_li)")
+        new_name=$(echo $new_d$file_name"_"$nn_n)
+    elif [ $status_name -eq 2 ]
+    then
+        ascii_val=$(printf "%d" "'$name_n")
+        st_li=$((ascii_val + i))
+        if [ $st_li -gt 90 ]
+        then
+            break
+        fi
+        nn_n=$(printf "\\$(printf %o $st_li)")
+        new_name=$(echo $new_d$file_name"_"$nn_n)
+    fi
+    
+    echo $new_name
+    #cp $main_d $new_name
+done
+#echo $main_d
+if [ $flag_r -eq 1 ]
+then
+rm $main_d
+fi
